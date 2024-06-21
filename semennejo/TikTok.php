@@ -12,7 +12,21 @@ class TikTok
 
     }
 
-    public function getContent($url, $geturl = false)
+    public static function getUrl(string $url){
+        $url = trim($url);
+        $resp = TikTok::getContent($url);
+        $check = explode('"downloadAddr":"', $resp);
+        if (count($check) > 1) {
+            $contentURL = explode("\"", $check[1])[0];
+            $contentURL = TikTok::escape_sequence_decode($contentURL);
+            $videoKey = TikTok::getKey($contentURL);
+            return "https://api.tiktokv.com/aweme/v1/playwm/?video_id=$videoKey";
+        }else{
+            return false;
+        }
+    }
+
+    public static function getContent($url, $geturl = false)
     {
         $ch = curl_init();
         $options = array(
@@ -45,7 +59,7 @@ class TikTok
         return strval($data);
     }
 
-    public function getKey($playable)
+    public static function getKey($playable)
     {
         $ch = curl_init();
         $headers = [
@@ -90,7 +104,7 @@ class TikTok
         return $key;
     }
 
-    public function escape_sequence_decode($str)
+    public static function escape_sequence_decode($str)
     {
 
         // [U+D800 - U+DBFF][U+DC00 - U+DFFF]|[U+0000 - U+FFFF]
