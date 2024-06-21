@@ -26,13 +26,9 @@ class Loader
                     $contentURL = explode("\"", $check[1])[0];
                     $contentURL = $tiktok->escape_sequence_decode($contentURL);
                     $videoKey = $tiktok->getKey($contentURL);
-                    $cleanVideo = "https://api2-16-h2.musical.ly/aweme/v1/play/?video_id=$videoKey&vr_type=0&is_play_url=1&source=PackSourceEnum_PUBLISH&media_type=4";
-                    $cleanVideo = $tiktok->getContent($cleanVideo, true);
-
-                    $video = $tiktok->downloadVideo($contentURL);
-                    $tgApi->replyVideo("https://ankarian-mc.ru/bot/".$video); //TODO: вот так вот
+                    $cleanVideo = "https://api.tiktokv.com/aweme/v1/playwm/?video_id=$videoKey";
+                    $tgApi->replyVideo($cleanVideo);
                 }
-
             } else {
                 $tgApi->replyMessage("Отправь ссылку на публикацию TikTok или YouTube, возможно, ссылка неполная.");
             }

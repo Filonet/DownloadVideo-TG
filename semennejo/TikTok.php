@@ -2,64 +2,14 @@
 
 namespace semennejo;
 
+use Exception;
+
 class TikTok
 {
 
-    public function generateRandomString($length = 10)
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
 
-    public function downloadVideo($video_url, $geturl = false)
-    {
-        $ch = curl_init();
-        $headers = array(
-            'Range: bytes=0-',
-        );
-        $options = array(
-            CURLOPT_URL => $video_url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => false,
-            CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLINFO_HEADER_OUT => true,
-            CURLOPT_USERAGENT => 'okhttp',
-            CURLOPT_ENCODING => "utf-8",
-            CURLOPT_AUTOREFERER => true,
-            CURLOPT_COOKIEJAR => 'cookie.txt',
-            CURLOPT_COOKIEFILE => 'cookie.txt',
-            CURLOPT_REFERER => 'https://www.tiktok.com/',
-            CURLOPT_CONNECTTIMEOUT => 30,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_MAXREDIRS => 10,
-        );
-        curl_setopt_array($ch, $options);
-        if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
-            curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-        }
-        $data = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($geturl === true) {
-            return curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-        }
-        curl_close($ch);
-        $dir = "user_videos";
-        if (!file_exists($dir)) {
-            mkdir($dir);
-        }
-        $filename = $dir."/" . $this->generateRandomString() . ".mp4";
-        $d = fopen($filename, "w");
-        fwrite($d, $data);
-        fclose($d);
-        return $filename;
+    public function __construct () {
+
     }
 
     public function getContent($url, $geturl = false)
