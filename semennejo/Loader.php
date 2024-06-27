@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace semennejo;
 
-use CURLFile;
-
 class Loader
 {
 
@@ -33,7 +31,7 @@ class Loader
                     $tgApi->replyMessage("Ошибка! Попробуйте ещё раз.");
                 }
             } else {
-                $tgApi->replyMessage("Отправь ссылку на публикацию TikTok или YouTube, возможно, ссылка неполная.");
+                $tgApi->replyMessage("Отправь ссылку на публикацию TikTok, возможно, ссылка неполная.");
             }
         }
     }
